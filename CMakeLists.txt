@@ -3,4 +3,4 @@ project(multi_machine_flowshop)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(multi_machine_flowshop main.cpp)
+add_executable(multi_machine_flowshop main.cpp task.cpp task.h)
