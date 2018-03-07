@@ -1,5 +1,5 @@
 # README
-Brute force algorithm for solving two and three machine flowshop problem
+Brute force algorithm (for now, johnson's pending) for solving two and three machine flowshop problem
 
 Tasks are created in loop. Values of Mx (where x is machine number) are generated randomly,
 they represent time needed for x machine to process task.
