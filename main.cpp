@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include "task.h"
 
-#define TASK_COUNT 2
+#define TASK_COUNT 4
 #define MIN_TIME 1
 #define MAX_TIME 20
 
