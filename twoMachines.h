@@ -1,0 +1,37 @@
+//
+// Created by Patryk Knapik on 15.03.2018.
+//
+
+#ifndef MULTI_MACHINE_FLOWSHOP_TWOMACHINES_H
+#define MULTI_MACHINE_FLOWSHOP_TWOMACHINES_H
+
+#include <iostream>
+#include <vector>
+#include <list>
+#include "task.h"
+
+class twoMachines {
+private:
+    unsigned int M1time = 0, M2time = 0, Cmax = 0, Cmin = std::numeric_limits<unsigned int>::max();
+    std::vector<task *> queuedTasks;
+public:
+    void calculateMakeSpan(const std::vector<task *> &tasks);
+
+    void calculateMakeSpan(const std::list<task *> &tasks);
+
+    unsigned int getMinMakeSpan() {
+        return Cmin;
+    }
+
+    std::vector<task *> getOptimalTaskSet() {
+        return queuedTasks;
+    }
+
+    unsigned int getCurrentMakeSpan() {
+        return Cmax;
+    }
+
+};
+
+
+#endif //MULTI_MACHINE_FLOWSHOP_TWOMACHINES_H

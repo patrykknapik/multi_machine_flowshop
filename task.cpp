@@ -9,3 +9,4 @@ std::ostream &operator<<(std::ostream &stream, const task &Task) {
     stream << "Times: " << Task.getM1() << "M1, " << Task.getM2() << "M2, " << Task.getM3() << "M3";
     return stream;
 }
+
