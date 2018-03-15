@@ -10,3 +10,36 @@ std::ostream &operator<<(std::ostream &stream, const task &Task) {
     return stream;
 }
 
+void task::setM2(unsigned newM2) {
+    M2time = newM2;
+    virtM1time = M1time + M2time;
+    virtM2time = M2time + M3time;
+}
+
+void task::setM3(unsigned newM3) {
+    M3time = newM3;
+    virtM2time = M2time + M3time;
+}
+
+void task::setM1(unsigned newM1) {
+    M1time = newM1;
+    virtM1time = M1time + M2time;
+}
+
+task::task(unsigned newID, unsigned newM1time, unsigned newM2time, unsigned newM3time) : ID(newID), M1time(newM1time),
+                                                                                         M2time(newM2time),
+                                                                                         M3time(newM3time) {
+    virtM1time = newM1time + newM2time;
+    virtM2time = newM2time + newM3time;
+    if (M1time < M2time) {
+        minTime = M1time;
+    } else {
+        minTime = M2time;
+    }
+
+    if (virtM1time < virtM2time) {
+        minVirtTime = virtM1time;
+    } else {
+        minVirtTime = virtM2time;
+    }
+}

@@ -13,23 +13,7 @@ private:
     unsigned int ID, M1time, M2time, M3time, virtM1time, virtM2time, minTime, minVirtTime;
 
 public:
-    task(unsigned newID, unsigned newM1time, unsigned newM2time, unsigned newM3time) : ID(newID), M1time(newM1time),
-                                                                                       M2time(newM2time),
-                                                                                       M3time(newM3time) {
-        virtM1time = newM1time + newM2time;
-        virtM2time = newM2time + newM3time;
-        if (M1time < M2time) {
-            minTime = M1time;
-        } else {
-            minTime = M2time;
-        }
-
-        if (virtM1time < virtM2time) {
-            minVirtTime = virtM1time;
-        } else {
-            minVirtTime = virtM2time;
-        }
-    }
+    task(unsigned newID, unsigned newM1time, unsigned newM2time, unsigned newM3time);
 
     unsigned getID() const {
         return ID;
@@ -43,29 +27,19 @@ public:
         return M1time;
     }
 
-    void setM1(unsigned newM1) {
-        M1time = newM1;
-        virtM1time = M1time + M2time;
-    }
+    void setM1(unsigned newM1);
 
     unsigned getM2() const {
         return M2time;
     }
 
-    void setM2(unsigned newM2) {
-        M2time = newM2;
-        virtM1time = M1time + M2time;
-        virtM2time = M2time + M3time;
-    }
+    void setM2(unsigned newM2);
 
     unsigned getM3() const {
         return M3time;
     }
 
-    void setM3(unsigned newM3) {
-        M3time = newM3;
-        virtM2time = M2time + M3time;
-    }
+    void setM3(unsigned newM3);
 
     unsigned getVirtM2() const {
         return virtM2time;

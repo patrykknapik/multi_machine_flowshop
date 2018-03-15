@@ -11,9 +11,9 @@
 #include "task.h"
 
 class threeMachines {
+private:
     unsigned int M1time = 0, M2time = 0, M3time = 0, Cmax = 0, Cmin = std::numeric_limits<unsigned int>::max();
     std::vector<task *> queuedTasks;
-
 public:
     void calculateMakeSpan(const std::vector<task *> &tasks);
 
