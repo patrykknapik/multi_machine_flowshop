@@ -39,6 +39,7 @@ int main() {
                                  (std::rand() % (MAX_TIME - MIN_TIME)) + MIN_TIME));
     }
 
+
     std::cout << "Tasks parameters:\n";
     for (task *Task : tasks) {
         std::cout << *Task << "\n";
@@ -134,7 +135,7 @@ int main() {
     gettimeofday(&time_stamp_start, nullptr);
     std::sort(tasks.begin(), tasks.end(), taskCompVirtMinTimeNeg);
     for (auto iter = tasks.rbegin(); iter != tasks.rend(); ++iter) {
-        if ((*iter)->getMinTime() == (*iter)->getM1()) {
+        if ((*iter)->getMinVirtTime() == (*iter)->getVirtM1()) {
             johnsonsTasksFront.push_back(*iter);
         } else {
             johnsonsTasksBack.push_front(*iter);

@@ -31,13 +31,13 @@ task::task(unsigned newID, unsigned newM1time, unsigned newM2time, unsigned newM
                                                                                          M3time(newM3time) {
     virtM1time = newM1time + newM2time;
     virtM2time = newM2time + newM3time;
-    if (M1time < M2time) {
+    if (M1time <= M2time) {
         minTime = M1time;
     } else {
         minTime = M2time;
     }
 
-    if (virtM1time < virtM2time) {
+    if (virtM1time <= virtM2time) {
         minVirtTime = virtM1time;
     } else {
         minVirtTime = virtM2time;
