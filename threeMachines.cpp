@@ -69,7 +69,7 @@ void threeMachines::generatePlot(std::string &fileName) {
     }
     file << "EOD\n";
     file << "set yrange [0:4]\n";
-    file << "plot $DATA using 1:2:3:4 with vectors filled head ls 3\n";
+    file << "plot $DATA using 1:2:3:4 with vectors filled head\n";
     file << "reset\n";
     file.close();
     system("gnuplot tmp.gpl");
