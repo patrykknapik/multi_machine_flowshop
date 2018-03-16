@@ -30,3 +30,33 @@ void twoMachines::calculateMakeSpan(const std::list<task *> &tasks) {
     }
     calculateMakeSpan(tmpTasks);
 }
+
+void twoMachines::generatePlot(std::string &fileName) {
+    std::ofstream file;
+    unsigned prevM1timeTmp, prevM2timeTmp, M1timeTmp, M2timeTmp;
+    file.open("tmp.gpl");
+    file << "set terminal svg size 1000,750\n";
+    file << "set output '"<< fileName << "'\n";
+    file << "$DATA << EOD\n";
+    prevM1timeTmp = 0;
+    prevM2timeTmp = queuedTasks.at(0)->getM1();
+
+    for (auto Task : queuedTasks) {
+        file << prevM1timeTmp << " 1 ";
+        M1timeTmp = Task->getM1();
+        prevM1timeTmp += M1timeTmp;
+        file << M1timeTmp<< " 0\n";
+
+        prevM2timeTmp = std::max(prevM2timeTmp, prevM1timeTmp);
+        file << prevM2timeTmp << " 2 ";
+        M2timeTmp = Task->getM2();
+        prevM2timeTmp += Task->getM2();
+        file << M2timeTmp << " 0\n";
+    }
+    file << "EOD\n";
+    file << "set yrange [0:3]\n";
+    file << "plot $DATA using 1:2:3:4 with vectors filled head ls 3\n";
+    file << "reset\n";
+    file.close();
+    system("gnuplot tmp.gpl");
+}

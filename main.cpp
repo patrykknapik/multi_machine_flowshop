@@ -10,6 +10,7 @@
 #define MIN_TIME 1
 #define MAX_TIME 20
 #define SHOW_PERMUTATIONS true
+#define GENERATE_PLOT true
 
 unsigned long int factorial(unsigned long int i) {
     unsigned long int f = 1;
@@ -153,6 +154,19 @@ int main() {
     elapsed_time = (time_stamp_stop.tv_sec - time_stamp_start.tv_sec) * 1000.0;      // sec to ms
     elapsed_time += (time_stamp_stop.tv_usec - time_stamp_start.tv_usec) / 1000.0;   // us to ms
     std::cout << "Computation time: " << elapsed_time << " ms.\n\n\n";
+
+
+    if(GENERATE_PLOT) {
+        std::string nazwa("bfplot2.svg");
+        twoMs.generatePlot(nazwa);
+        nazwa = "bfplot3.svg";
+        threeMs.generatePlot(nazwa);
+        nazwa = "jplot2.svg";
+        twoMsJohnson.generatePlot(nazwa);
+        nazwa = "jplot3.svg";
+        threeMsJohnson.generatePlot(nazwa);
+    }
+
 
     for (task *Task : tasks) {
         delete Task;

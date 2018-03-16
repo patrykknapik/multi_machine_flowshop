@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <fstream>
 #include "task.h"
 
 class twoMachines {
@@ -31,6 +32,7 @@ public:
         return Cmax;
     }
 
+    void generatePlot(std::string &fileName);
 };
 
 
