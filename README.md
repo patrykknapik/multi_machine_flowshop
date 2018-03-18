@@ -48,7 +48,7 @@ You may want to change:
 ### Visualisation
 I'm using `gnuplot` to visualise chosen task order.
 
-Example visualisation for three machines:
+Example visualisation for three machines (number above arrow represents task ID):
 ![alt text](jplot3.svg "Three machines tasks runtime visualisation")
 
 ### Summary
