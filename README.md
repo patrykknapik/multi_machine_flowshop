@@ -13,9 +13,9 @@ You may want to change:
 5. To `GENERATE_PLOT` You will need `gnuplot`
 6. I used `GENERATE_TEST_DATA` to generate below tables
 
-###Test times
+### Test times
 
-#####Two Machines
+##### Two Machines
 | Number of tasks: |Johnson's algorithm |make span | Brute force | make span|
 | ------------- |-------------:| -----:| -----:| -----:|
 |2|0.007 ms|19|0.006 ms|19|
@@ -30,7 +30,7 @@ You may want to change:
 |11|0.017 ms|124|16103.2 ms|124|
 |12|0.014 ms|123|198605 ms|123|
 
-#####Three Machines
+##### Three Machines
 | Number of tasks: |Johnson's algorithm | make span | Brute force | make span|
 | ------------- |-------------:| -----:| -----:| -----:|
 |2|0.002 ms|35|0.008 ms|35|
@@ -45,13 +45,13 @@ You may want to change:
 |11|0.006 ms|134|19637.4 ms|131|
 |12|0.006 ms|129|249579 ms|126|
 
-###Visualisation
+### Visualisation
 I'm using `gnuplot` to visualise chosen task order.
 
 Example visualisation for three machines:
 ![alt text](jplot3.svg "Three machines tasks runtime visualisation")
 
-###Summary
+### Summary
 Johnson's algorithm is significantly faster than brute force and gives the same results as brute force.
 Three machines version of Johnson's algorithm is not perfect but it is close enough for the time savings.
 
