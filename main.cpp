@@ -9,8 +9,9 @@
 #define TASK_COUNT 5
 #define MIN_TIME 1
 #define MAX_TIME 20
-#define SHOW_PERMUTATIONS true
+#define SHOW_PERMUTATIONS false
 #define GENERATE_PLOT true
+#define GENRATE_TEST_DATA false
 
 unsigned long int factorial(unsigned long int i) {
     unsigned long int f = 1;
@@ -22,10 +23,9 @@ unsigned long int factorial(unsigned long int i) {
 }
 
 
-
 int main() {
     timeval time_stamp_start, time_stamp_stop;
-    double elapsed_time;
+    double elapsed_time, twoMachinesBruteForceTime, twoMachinesJohnsonTime, threeMachinesBruteForceTime, threeMachinesJohnsonTime;
     std::vector<task *> tasks;
     std::list<task *> johnsonsTasksFront, johnsonsTasksBack;
     unsigned long int tasksPermutations = 0;
@@ -86,6 +86,8 @@ int main() {
     elapsed_time += (time_stamp_stop.tv_usec - time_stamp_start.tv_usec) / 1000.0;   // us to ms
     std::cout << "Computation time: " << elapsed_time << " ms.\n\n\n";
 
+    twoMachinesBruteForceTime = elapsed_time;
+
 
     gettimeofday(&time_stamp_start, nullptr);
     tasksPermutations = factorial(tasks.size());
@@ -105,12 +107,13 @@ int main() {
     elapsed_time += (time_stamp_stop.tv_usec - time_stamp_start.tv_usec) / 1000.0;   // us to ms
     std::cout << "Computation time: " << elapsed_time << " ms.\n\n\n";
 
+    threeMachinesBruteForceTime = elapsed_time;
 
     //johnson:
     std::cout << "\n\nJonson's algorithm:\n";
     gettimeofday(&time_stamp_start, nullptr);
-    std::sort(tasks.begin(), tasks.end(), taskCompMinTimeNeg);
-    for (auto iter = tasks.rbegin(); iter != tasks.rend(); ++iter) {
+    std::sort(tasks.begin(), tasks.end(), taskCompMinTime);
+    for (auto iter = tasks.begin(); iter != tasks.end(); ++iter) {
         if ((*iter)->getMinTime() == (*iter)->getM1()) {
             johnsonsTasksFront.push_back(*iter);
         } else {
@@ -130,12 +133,14 @@ int main() {
     elapsed_time += (time_stamp_stop.tv_usec - time_stamp_start.tv_usec) / 1000.0;   // us to ms
     std::cout << "Computation time: " << elapsed_time << " ms.\n\n\n";
 
+    twoMachinesJohnsonTime = elapsed_time;
 
     johnsonsTasksFront.clear();
     johnsonsTasksBack.clear();
+
     gettimeofday(&time_stamp_start, nullptr);
-    std::sort(tasks.begin(), tasks.end(), taskCompVirtMinTimeNeg);
-    for (auto iter = tasks.rbegin(); iter != tasks.rend(); ++iter) {
+    std::sort(tasks.begin(), tasks.end(), taskCompVirtMinTime);
+    for (auto iter = tasks.begin(); iter != tasks.end(); ++iter) {
         if ((*iter)->getMinVirtTime() == (*iter)->getVirtM1()) {
             johnsonsTasksFront.push_back(*iter);
         } else {
@@ -155,9 +160,11 @@ int main() {
     elapsed_time += (time_stamp_stop.tv_usec - time_stamp_start.tv_usec) / 1000.0;   // us to ms
     std::cout << "Computation time: " << elapsed_time << " ms.\n\n\n";
 
+    threeMachinesJohnsonTime = elapsed_time;
 
-    if(GENERATE_PLOT) {
+    if (GENERATE_PLOT) {
         std::string nazwa("bfplot2.svg");
+
         twoMs.generatePlot(nazwa);
         nazwa = "bfplot3.svg";
         threeMs.generatePlot(nazwa);
@@ -165,6 +172,19 @@ int main() {
         twoMsJohnson.generatePlot(nazwa);
         nazwa = "jplot3.svg";
         threeMsJohnson.generatePlot(nazwa);
+
+    }
+
+    if (GENRATE_TEST_DATA) {
+        std::ofstream file;
+        file.open("test_data_two_machines.log", std::ofstream::app);
+        file << "|" << TASK_COUNT << "|" << twoMachinesJohnsonTime << " ms|" << twoMsJohnson.getMinMakeSpan();
+        file << "|" << twoMachinesBruteForceTime << " ms|" << twoMs.getMinMakeSpan() << "|\n";
+        file.close();
+        file.open("test_data_three_machines.log", std::ofstream::app);
+        file << "|" << TASK_COUNT << "|" << threeMachinesJohnsonTime << " ms|" << threeMsJohnson.getMinMakeSpan();
+        file << "|" << threeMachinesBruteForceTime << " ms|" << threeMs.getMinMakeSpan() << "|\n";
+        file.close();
     }
 
 
