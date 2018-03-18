@@ -9,13 +9,13 @@ You may want to change:
 1. Number of tasks by changing `TASK_COUNT`
 2. Minimal time for machine by changing `MIN_TIME`
 3. Maximal time for machine by changing `MAX_TIME`
-4. You can save some time by turning of `SHOW_PERMUTATIONS`
+4. You can save some time by turning off `SHOW_PERMUTATIONS`
 5. To `GENERATE_PLOT` You will need `gnuplot`
-6. I used `GENERATE_TEST_DATA` to generate below tables
+6. I used `GENERATE_TEST_DATA` to generate tables below
 
 ### Test times
 
-##### Two Machines
+#### Two Machines
 | Number of tasks: |Johnson's algorithm |make span | Brute force | make span|
 | ------------- |-------------:| -----:| -----:| -----:|
 |2|0.007 ms|19|0.006 ms|19|
@@ -30,7 +30,7 @@ You may want to change:
 |11|0.017 ms|124|16103.2 ms|124|
 |12|0.014 ms|123|198605 ms|123|
 
-##### Three Machines
+#### Three Machines
 | Number of tasks: |Johnson's algorithm | make span | Brute force | make span|
 | ------------- |-------------:| -----:| -----:| -----:|
 |2|0.002 ms|35|0.008 ms|35|

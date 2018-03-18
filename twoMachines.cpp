@@ -59,13 +59,13 @@ void twoMachines::generatePlot(std::string &fileName) {
         file << prevM1timeTmp << " -1 ";
         M1timeTmp = Task->getM1();
         prevM1timeTmp += M1timeTmp;
-        file << M1timeTmp << " 0 " << (*iter) << '\n';
+        file << M1timeTmp << " 0 " << (*iter) << ' ' << Task->getID() << '\n';
 
         prevM2timeTmp = std::max(prevM2timeTmp, prevM1timeTmp);
         file << prevM2timeTmp << " -2 ";
         M2timeTmp = Task->getM2();
         prevM2timeTmp += Task->getM2();
-        file << M2timeTmp << " 0 " << (*iter) << '\n';
+        file << M2timeTmp << " 0 " << (*iter) << ' ' << Task->getID() << '\n';
 
         if (++iter == colors.end())
             iter = colors.begin();
@@ -74,7 +74,7 @@ void twoMachines::generatePlot(std::string &fileName) {
     file << "set xlabel \"time (total makespan: " << Cmin << ")\"\n";
     file << "set yrange [-3:0]\n";
     file << "set ytics (\"\" 0,\"First Machine\" -1, \"Second Machine\" -2,\"\" -3)\n";
-    file << "plot $DATA using 1:2:3:4:5 with vectors filled head lw 3 lc rgb variable\n";
+    file << "plot $DATA using 1:2:3:4:5 with vectors lw 3 lc rgb variable, $DATA using 1:2:6 with labels offset 1,1\n";
     file << "reset\n";
     file.close();
     system("gnuplot tmp.gpl");

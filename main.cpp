@@ -2,7 +2,6 @@
 #include <vector>
 #include <list>
 #include <sys/time.h>
-#include <unordered_set>
 #include "twoMachines.h"
 #include "threeMachines.h"
 
