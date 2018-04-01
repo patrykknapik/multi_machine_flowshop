@@ -71,6 +71,7 @@ void twoMachines::generatePlot(std::string &fileName) {
             iter = colors.begin();
     }
     file << "EOD\n";
+    file << "unset key\n";
     file << "set xlabel \"time (total makespan: " << Cmin << ")\"\n";
     file << "set yrange [-3:0]\n";
     file << "set ytics (\"\" 0,\"First Machine\" -1, \"Second Machine\" -2,\"\" -3)\n";
