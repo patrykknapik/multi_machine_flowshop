@@ -30,8 +30,8 @@ int main() {
     unsigned long int tasksPermutations = 0;
     std::srand(std::time(nullptr));
 
-    twoMachines twoMs, twoMsJohnson;
-    threeMachines threeMs, threeMsJohnson;
+    twoMachines twoMs, twoMsJohnson, twoMsNEH;
+    threeMachines threeMs, threeMsJohnson, threeMsNEH;
 
     for (unsigned i = 1; i <= TASK_COUNT; ++i) {
         tasks.push_back(new task(i, (std::rand() % (MAX_TIME - MIN_TIME)) + MIN_TIME,
@@ -152,6 +152,51 @@ int main() {
 
     std::cout << "Sugested tasks queue for three machines: ";
     for (task *Task : johnsonsTasksFront) {
+        std::cout << Task->getID() << ' ';
+    }
+    std::cout << "; Cmin = " << threeMsJohnson.getCurrentMakeSpan() << '\n';
+    elapsed_time = (time_stamp_stop.tv_sec - time_stamp_start.tv_sec) * 1000.0;      // sec to ms
+    elapsed_time += (time_stamp_stop.tv_usec - time_stamp_start.tv_usec) / 1000.0;   // us to ms
+    std::cout << "Computation time: " << elapsed_time << " ms.\n\n\n";
+
+    threeMachinesJohnsonTime = elapsed_time;
+
+//    std::sort(tasks.begin(),tasks.end(),[](const task * a, const task * b) -> bool {return a->getID() < b->getID();});
+//    std::cout << "before neh: ";
+//    for (task *Task : tasks) {
+//        std::cout << Task->getID() << ' ';
+//    }
+    //neh
+    std::cout << "\n\nNEH algorithm:\n";
+    std::vector<task *> tmp, best, bestPrev;
+    unsigned Cmin = std::numeric_limits<unsigned>::max(), tmpCmax;
+    gettimeofday(&time_stamp_start, nullptr);
+    std::sort(tasks.begin(), tasks.end(), taskCompSumTimeNeg);
+    bestPrev.clear();
+    for (task *Task : tasks) {
+        tmp = bestPrev;
+        for (unsigned i = 0; i <= tmp.size(); ++i) {
+            tmp.insert(tmp.begin() + i, Task);
+            if ((tmpCmax = threeMsNEH.calculateMakeSpan(tmp)) < Cmin) {
+                Cmin = tmpCmax;
+                best = tmp;
+            }
+            tmp = bestPrev;
+        }
+        tmp.push_back(Task);
+        if ((tmpCmax = threeMsNEH.calculateMakeSpan(tmp)) < Cmin) {
+            Cmin = tmpCmax;
+            best = tmp;
+        }
+        Cmin = std::numeric_limits<unsigned>::max();
+        bestPrev = best;
+    }
+    tasks = best;
+
+    gettimeofday(&time_stamp_stop, nullptr);
+
+    std::cout << "Sugested tasks queue for three machines: ";
+    for (task *Task : tasks) {
         std::cout << Task->getID() << ' ';
     }
     std::cout << "; Cmin = " << threeMsJohnson.getCurrentMakeSpan() << '\n';

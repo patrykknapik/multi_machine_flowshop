@@ -16,9 +16,9 @@ private:
     unsigned int M1time = 0, M2time = 0, Cmax = 0, Cmin = std::numeric_limits<unsigned int>::max();
     std::vector<task *> queuedTasks;
 public:
-    void calculateMakeSpan(const std::vector<task *> &tasks);
+    unsigned calculateMakeSpan(const std::vector<task *> &tasks);
 
-    void calculateMakeSpan(const std::list<task *> &tasks);
+    unsigned calculateMakeSpan(const std::list<task *> &tasks);
 
     unsigned int getMinMakeSpan() {
         return Cmin;

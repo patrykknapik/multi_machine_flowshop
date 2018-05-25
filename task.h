@@ -10,7 +10,11 @@
 
 class task {
 private:
-    unsigned int ID, M1time, M2time, M3time, virtM1time, virtM2time, minTime, minVirtTime;
+    unsigned int ID, M1time, M2time, M3time, virtM1time, virtM2time, minTime, minVirtTime, sumTime;
+
+    unsigned int calculateSumTime() {
+        return (M1time + M2time + M3time);
+    }
 
 public:
     task(unsigned newID, unsigned newM1time, unsigned newM2time, unsigned newM3time);
@@ -57,6 +61,10 @@ public:
         return minVirtTime;
     }
 
+    unsigned getSumTime() const {
+        return sumTime;
+    }
+
     bool operator<(const task &task1) const {
         return ID < task1.getID();
     }
@@ -93,6 +101,14 @@ inline bool taskCompMinTimeNeg(const task *task1, const task *task2) {
 
 inline bool taskCompVirtMinTimeNeg(const task *task1, const task *task2) {
     return ((task1->getMinVirtTime()) > (task2->getMinVirtTime()));
+}
+
+inline bool taskCompSumTime(const task *task1, const task *task2) {
+    return ((task1->getSumTime()) < (task2->getSumTime()));
+}
+
+inline bool taskCompSumTimeNeg(const task *task1, const task *task2) {
+    return ((task1->getSumTime()) > (task2->getSumTime()));
 }
 
 #endif //MULTI_MACHINE_FLOWSHOP_TASK_H

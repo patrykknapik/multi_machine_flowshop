@@ -12,17 +12,20 @@ std::ostream &operator<<(std::ostream &stream, const task &Task) {
 
 void task::setM2(unsigned newM2) {
     M2time = newM2;
+    sumTime = calculateSumTime();
     virtM1time = M1time + M2time;
     virtM2time = M2time + M3time;
 }
 
 void task::setM3(unsigned newM3) {
     M3time = newM3;
+    sumTime = calculateSumTime();
     virtM2time = M2time + M3time;
 }
 
 void task::setM1(unsigned newM1) {
     M1time = newM1;
+    sumTime = calculateSumTime();
     virtM1time = M1time + M2time;
 }
 

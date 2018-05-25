@@ -5,7 +5,7 @@
 
 #include "threeMachines.h"
 
-void threeMachines::calculateMakeSpan(const std::vector<task *> &tasks) {
+unsigned threeMachines::calculateMakeSpan(const std::vector<task *> &tasks) {
     for (auto iter = tasks.begin(); iter != tasks.end(); ++iter) {
         if (iter == tasks.begin()) {
             M2time = M1time = M3time = (*iter)->getM1();
@@ -26,14 +26,15 @@ void threeMachines::calculateMakeSpan(const std::vector<task *> &tasks) {
         Cmin = Cmax;
         queuedTasks = tasks;
     }
+    return Cmax;
 }
 
-void threeMachines::calculateMakeSpan(const std::list<task *> &tasks) {
+unsigned threeMachines::calculateMakeSpan(const std::list<task *> &tasks) {
     std::vector<task *> tmpTasks;
     for (task *Task : tasks) {
         tmpTasks.push_back(Task);
     }
-    calculateMakeSpan(tmpTasks);
+    return calculateMakeSpan(tmpTasks);
 }
 
 void threeMachines::generatePlot(std::string &fileName) {
