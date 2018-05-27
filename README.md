@@ -1,5 +1,6 @@
 # README
-Brute force algorithm comparison to Johnson's algorithm for solving two and three machine flowshop problem
+Brute force algorithm comparison to Johnson's algorithm for solving two and three machines flowshop problem.
+NEH algorithm (O(n^2)) for three machines flowshop problem.
 
 Tasks are created in loop. Values of Mx (where x is machine number) are generated randomly,
 they represent time needed for x machine to process task.
