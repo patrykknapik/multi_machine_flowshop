@@ -33,6 +33,8 @@ public:
     }
 
     void generatePlot(std::string &fileName);
+
+    void clear();
 };
 
 

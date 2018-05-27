@@ -10,7 +10,7 @@
 #define MAX_TIME 20
 #define SHOW_PERMUTATIONS false
 #define GENERATE_PLOT true
-#define GENRATE_TEST_DATA false
+#define GENERATE_TEST_DATA false
 
 unsigned long int factorial(unsigned long int i) {
     unsigned long int f = 1;
@@ -24,13 +24,13 @@ unsigned long int factorial(unsigned long int i) {
 
 int main() {
     timeval time_stamp_start, time_stamp_stop;
-    double elapsed_time, twoMachinesBruteForceTime, twoMachinesJohnsonTime, threeMachinesBruteForceTime, threeMachinesJohnsonTime;
+    double elapsed_time, twoMachinesBruteForceTime, twoMachinesJohnsonTime, threeMachinesBruteForceTime, threeMachinesJohnsonTime, threeMachinesNEHTime;
     std::vector<task *> tasks;
     std::list<task *> johnsonsTasksFront, johnsonsTasksBack;
     unsigned long int tasksPermutations = 0;
     std::srand(std::time(nullptr));
 
-    twoMachines twoMs, twoMsJohnson, twoMsNEH;
+    twoMachines twoMs, twoMsJohnson;
     threeMachines threeMs, threeMsJohnson, threeMsNEH;
 
     for (unsigned i = 1; i <= TASK_COUNT; ++i) {
@@ -161,11 +161,11 @@ int main() {
 
     threeMachinesJohnsonTime = elapsed_time;
 
-//    std::sort(tasks.begin(),tasks.end(),[](const task * a, const task * b) -> bool {return a->getID() < b->getID();});
-//    std::cout << "before neh: ";
-//    for (task *Task : tasks) {
-//        std::cout << Task->getID() << ' ';
-//    }
+    std::sort(tasks.begin(), tasks.end(), [](const task *a, const task *b) -> bool { return a->getID() < b->getID(); });
+    std::cout << "Tasks order reset before neh: ";
+    for (task *Task : tasks) {
+        std::cout << Task->getID() << ' ';
+    }
     //neh
     std::cout << "\n\nNEH algorithm:\n";
     std::vector<task *> tmp, best, bestPrev;
@@ -185,13 +185,14 @@ int main() {
         }
         tmp.push_back(Task);
         if ((tmpCmax = threeMsNEH.calculateMakeSpan(tmp)) < Cmin) {
-            Cmin = tmpCmax;
             best = tmp;
         }
         Cmin = std::numeric_limits<unsigned>::max();
         bestPrev = best;
     }
     tasks = best;
+    threeMsNEH.clear();
+    threeMsNEH.calculateMakeSpan(tasks);
 
     gettimeofday(&time_stamp_stop, nullptr);
 
@@ -199,12 +200,12 @@ int main() {
     for (task *Task : tasks) {
         std::cout << Task->getID() << ' ';
     }
-    std::cout << "; Cmin = " << threeMsJohnson.getCurrentMakeSpan() << '\n';
+    std::cout << "; Cmin = " << threeMsNEH.getCurrentMakeSpan() << '\n';
     elapsed_time = (time_stamp_stop.tv_sec - time_stamp_start.tv_sec) * 1000.0;      // sec to ms
     elapsed_time += (time_stamp_stop.tv_usec - time_stamp_start.tv_usec) / 1000.0;   // us to ms
     std::cout << "Computation time: " << elapsed_time << " ms.\n\n\n";
 
-    threeMachinesJohnsonTime = elapsed_time;
+    threeMachinesNEHTime = elapsed_time;
 
     if (GENERATE_PLOT) {
         std::string nazwa("bfplot2.svg");
@@ -219,7 +220,7 @@ int main() {
 
     }
 
-    if (GENRATE_TEST_DATA) {
+    if (GENERATE_TEST_DATA) {
         std::ofstream file;
         file.open("test_data_two_machines.log", std::ofstream::app);
         file << "|" << TASK_COUNT << "|" << twoMachinesJohnsonTime << " ms|" << twoMsJohnson.getMinMakeSpan();
@@ -227,7 +228,8 @@ int main() {
         file.close();
         file.open("test_data_three_machines.log", std::ofstream::app);
         file << "|" << TASK_COUNT << "|" << threeMachinesJohnsonTime << " ms|" << threeMsJohnson.getMinMakeSpan();
-        file << "|" << threeMachinesBruteForceTime << " ms|" << threeMs.getMinMakeSpan() << "|\n";
+        file << "|" << threeMachinesBruteForceTime << " ms|" << threeMs.getMinMakeSpan();
+        file << "|" << threeMachinesNEHTime << " ms|" << threeMsNEH.getMinMakeSpan() << "|\n";
         file.close();
     }
 
